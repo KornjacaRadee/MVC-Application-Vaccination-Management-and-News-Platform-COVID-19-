@@ -12,6 +12,9 @@ public class Manufacturer {
         this.country = country;
     }
 
+    public Manufacturer() {
+    }
+
     public Integer getId() {
         return id;
     }

@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class User {
+
     private int id;
     private String email;
     private String firstName;
@@ -29,6 +30,9 @@ public class User {
         this.role = role;
         this.registration = registration;
         this.birth = birth;
+    }
+
+    public User() {
     }
 
     public int getId() {
