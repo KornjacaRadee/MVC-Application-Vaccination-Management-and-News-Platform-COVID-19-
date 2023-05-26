@@ -8,6 +8,28 @@ public class Applicat {
     private Vaccine vaccine;
     private Patient patient;
 
+    public Integer getVaccineId() {
+        return vaccineId;
+    }
+
+    public void setVaccineId(Integer vaccineId) {
+        this.vaccineId = vaccineId;
+    }
+
+    private Integer vaccineId;
+
+    public Integer getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Integer patientId) {
+        this.patientId = patientId;
+    }
+
+    private Integer patientId;
+
+
+
     public Applicat(int id, LocalDateTime dateTime, Vaccine vaccine, Patient patient) {
         this.id = id;
         this.dateTime = dateTime;

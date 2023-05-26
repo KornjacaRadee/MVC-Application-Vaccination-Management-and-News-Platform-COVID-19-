@@ -6,6 +6,16 @@ public class Vaccine {
         private int available;
         private Manufacturer manufacturer;
 
+    private int manufacturerId;
+
+    public int getManufacturerId() {
+        return manufacturerId;
+    }
+
+    public void setManufacturerId(int manufacturerId) {
+        this.manufacturerId = manufacturerId;
+    }
+
     public Vaccine(int id, String name, int available, Manufacturer manufacturer) {
         this.id = id;
         this.name = name;

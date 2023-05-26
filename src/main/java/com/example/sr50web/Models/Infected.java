@@ -1,5 +1,6 @@
 package com.example.sr50web.Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 public class Infected {
 
@@ -9,9 +10,9 @@ public class Infected {
     private int hospitalized;
     private int respirator;
     private int allInfected;
-    private LocalDateTime dateTime;
+    private LocalDate dateTime;
 
-    public Infected(int id, int infected, int tested, int hospitalized, int respirator, int allInfected, LocalDateTime dateTime) {
+    public Infected(int id, int infected, int tested, int hospitalized, int respirator, int allInfected, LocalDate dateTime) {
         this.id = id;
         this.infected = infected;
         this.tested = tested;
@@ -72,11 +73,11 @@ public class Infected {
         this.allInfected = allInfected;
     }
 
-    public LocalDateTime getDateTime() {
+    public LocalDate getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(LocalDate dateTime) {
         this.dateTime = dateTime;
     }
 

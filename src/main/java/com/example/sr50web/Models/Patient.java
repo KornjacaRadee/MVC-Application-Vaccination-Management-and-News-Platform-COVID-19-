@@ -8,7 +8,7 @@ public class Patient {
         private Boolean vaccinated;
         private int received;
         private LocalDateTime lastdose;
-        private User user;
+        public User user;
 
     public Patient(int userId, Boolean vaccinated, int received, LocalDateTime lastdose, User user) {
         this.userId = userId;
@@ -19,6 +19,9 @@ public class Patient {
     }
 
     public Patient() {
+    }
+
+    public Patient(int userId,User user) {
     }
 
     public int getUserId() {
