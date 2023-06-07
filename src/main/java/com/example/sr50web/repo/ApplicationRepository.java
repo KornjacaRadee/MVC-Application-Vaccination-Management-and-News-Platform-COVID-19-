@@ -98,6 +98,40 @@ public class ApplicationRepository implements IApplicationRepository {
         }
         return rowCallbackHandler.getApplications();
     }
+
+    @Override
+    public List<Applicat> searchApplications(String query) {
+        String sql =
+                "SELECT v.id, v.date, v.patient, v.vaccine " +
+                        "FROM applications v " +
+                        "JOIN users m ON v.patient = m.id " +
+                        "WHERE m.name LIKE ? OR m.lastname LIKE ? OR m.jmbg LIKE ?";
+
+        ApplicationRepository.ApplicationRowCallBackHandler rowCallbackHandler = new ApplicationRepository.ApplicationRowCallBackHandler();
+        String likeQuery = "%" + query + "%";
+        jdbcTemplate.query(sql, rowCallbackHandler, query, query, query);
+
+        return rowCallbackHandler.getApplications();
+    }
+
+    @Transactional
+    @Override
+    public List<Applicat> findAllApplicationsByUser(String searchTerm){
+        String command = "SELECT application.id, application.date, application.patient, application.vaccine " +
+                "FROM applications application " +
+                "JOIN patients p ON application.patient_id = p.id " +
+                "WHERE p.user_name LIKE '%" + searchTerm + "%' " +
+                "   OR p.last_name LIKE '%" + searchTerm + "%' " +
+                "   OR p.jmbg LIKE '%" + searchTerm + "%' " +
+                "ORDER BY application.id";
+        ApplicationRowCallBackHandler rowCallbackHandler = new ApplicationRowCallBackHandler();
+        jdbcTemplate.query(command, rowCallbackHandler, searchTerm);
+        if (rowCallbackHandler.getApplications().size() == 0) {
+            return null;
+        }
+        return rowCallbackHandler.getApplications();
+
+    }
     @Transactional
     @Override
     public int save(Applicat applicat) {

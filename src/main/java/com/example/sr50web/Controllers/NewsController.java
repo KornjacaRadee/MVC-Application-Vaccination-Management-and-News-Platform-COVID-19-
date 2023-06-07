@@ -43,6 +43,7 @@ public class NewsController {
     @GetMapping("/home")
     public String showNewsHome(Model model){
         List<News> list = service.allNews();
+        model.addAttribute("allNews", list);
         List<Infected> infectedNews = infectedServices.allInfected();
         for(Infected infected : infectedNews){
             LocalDate today = LocalDate.now();
@@ -59,7 +60,6 @@ public class NewsController {
         }
 
         model.addAttribute("news", new News());
-        model.addAttribute("allNews", list);
         return "newsHome";
     }
 

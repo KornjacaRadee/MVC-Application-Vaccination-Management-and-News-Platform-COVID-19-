@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -62,7 +63,7 @@ public class ApplicationController {
         service.save(novo);
 
         ra.addFlashAttribute("message", "Proizvodjac je sacuvan");
-        return "redirect:/manufacturer";
+        return "redirect:/homepanel";
     }
     @GetMapping("/application/new")
     public String showAddUser(Model model){
@@ -73,6 +74,39 @@ public class ApplicationController {
         return "makeApplication";
     }
 
+    @GetMapping("/vaccination")
+    public String showApplciations(Model model){
+        List<Applicat> vaccines = service.listAll();
+        model.addAttribute("applicat", new Applicat());
+        model.addAttribute("applicats", vaccines);
+        model.addAttribute("method", "/application/save");
+        return "vaccination";
+    }
+
+    @GetMapping("/application/search")
+    public String searchVaccines(Model model, @RequestParam(required = false) String query) {
+        List<Applicat> applicats = service.searchApplications(query);
+
+        model.addAttribute("applicats", applicats);
+        return "applicationsearchresult";
+    }
 
 
-}
+    @GetMapping("/vaccination/{id}")
+    public String vaccination(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
+        patientServices.update(patientServices.getPatientById(id));
+        List<Applicat> applicats = service.listAll();
+        for(Applicat aplicat : applicats){
+            if(aplicat.getPatient().getUserId() == id){
+                int temp = aplicat.getVaccine().getAvailable();
+                Vaccine vaccine = aplicat.getVaccine();
+                vaccine.setAvailable(temp-1);
+                vaccinesService.save(vaccine);
+                service.delete(aplicat.getId());
+            }
+        }
+        return "redirect:/vaccination";
+    }}
+
+
+

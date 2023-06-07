@@ -50,14 +50,14 @@ public class VaccineRepository implements IVaccineRepository {
     @Override
     public List<Vaccine> searchVaccines(String query) {
         String sql =
-                "SELECT temp.id, temp.name, temp.available, temp.manufacturer " +
-                        "FROM vaccine temp " +
-                        "WHERE temp.name LIKE ? OR temp.available LIKE ? OR temp.manufacturer LIKE ? " +
-                        "ORDER BY temp.id";
+                "SELECT v.id, v.name, v.available, v.manufacturer " +
+                        "FROM vaccine v " +
+                        "JOIN manufacturer m ON v.manufacturer = m.id " +
+                        "WHERE v.name LIKE ? OR m.name LIKE ? OR m.country LIKE ?";
 
         VaccineRowCallbackHandler rowCallbackHandler = new VaccineRowCallbackHandler();
         String likeQuery = "%" + query + "%";
-        jdbcTemplate.query(sql, rowCallbackHandler, likeQuery, likeQuery, likeQuery);
+        jdbcTemplate.query(sql, rowCallbackHandler, query, query, query);
 
         return rowCallbackHandler.getVaccines();
     }

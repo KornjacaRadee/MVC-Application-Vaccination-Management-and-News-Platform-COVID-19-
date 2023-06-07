@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface IApplicationRepository {
     public List<Applicat> findAllApplications();
+
+    public List<Applicat> findAllApplicationsByUser(String searchTerm);
+    public List<Applicat> searchApplications(String query);
+
     public Applicat findApplicationById(Integer id);
     public List<Applicat> findApplicatiosUserId(Integer id);
 

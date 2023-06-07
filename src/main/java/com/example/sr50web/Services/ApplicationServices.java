@@ -14,12 +14,20 @@ public class ApplicationServices {
         return (List<Applicat>) repository.findAllApplications();
     }
 
+    public List<Applicat> listAllByPatient(String searchTerm){
+        return (List<Applicat>) repository.findAllApplicationsByUser(searchTerm);
+    }
+
     public void save(Applicat applicat) {
         if(repository.findApplicationById(applicat.getId()) != null){
             repository.update(applicat);
         }   else{
             repository.save(applicat);
         }
+    }
+
+    public List<Applicat> searchApplications(String query) {
+        return repository.searchApplications(query);
     }
     public List<Applicat> listApplicationsByUserId(Integer id){
 

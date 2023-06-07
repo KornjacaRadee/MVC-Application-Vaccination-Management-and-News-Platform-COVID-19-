@@ -72,6 +72,15 @@ public class VaccineController {
         return "newVaccine";
     }
 
+    @GetMapping("/vaccine/search")
+    public String searchVaccines(Model model, @RequestParam(required = false) String query) {
+        List<Vaccine> vaccines = service.searchVaccines(query);
+
+                model.addAttribute("vaccines", vaccines);
+        return "vaccinesearchresult";
+    }
+
+
     @PostMapping("/vaccine/save")
     public String save(Vaccine vaccine, RedirectAttributes ra) {
 

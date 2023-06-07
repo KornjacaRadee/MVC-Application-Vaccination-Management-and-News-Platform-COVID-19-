@@ -44,7 +44,7 @@ public class InfectedController {
             for (Cookie cookie : cookies) {
                 if(cookie.getValue().contains("@")){
                 User temp = userService.get(cookie.getValue());
-                if(temp.getRole().equals(Role.valueOf("ADMIN"))){
+                if(temp.getRole().equals(Role.ADMIN)){
                     return "newInfected";
                 }else{
                     return "redirect:/home";

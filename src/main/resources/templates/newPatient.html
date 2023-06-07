@@ -9,6 +9,7 @@
 </head>
 <!--OVDE SAM STAO TREBA DA SE PREMENE OD USERA STVARI TABELA RADI-->
 <body>
+<div th:include="navbar :: navbar">...</div>
 <form th:action="@{/patient/update}" method="post" th:object="${patient}" style="width: 50vw; margin: auto;">
   <input type="hidden"  th:field="*{userId}">
   <div class="form-group">

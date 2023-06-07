@@ -86,6 +86,8 @@ public class PatientRepository implements IPatientRepository {
         return rowCallbackHandler.getPatients();
     }
 
+
+
     @Transactional
     @Override
     public int save(Patient patient) {
@@ -103,7 +105,7 @@ public class PatientRepository implements IPatientRepository {
                 if(patient.getReceived() != 0){
                     preparedStatement.setInt(index++, patient.getReceived());
                 }else{
-                    preparedStatement.setInt(index++, 1);
+                    preparedStatement.setInt(index++, 0);
                 }
                 if(patient.getLastdose()!=null){
                     Timestamp timestamp = Timestamp.valueOf(patient.getLastdose());
@@ -126,11 +128,34 @@ public class PatientRepository implements IPatientRepository {
     @Override
     public int update(Patient patient) {
         String sql = "UPDATE patientinfo SET vaccinated = ?, received = ?, lastdose = ? WHERE userid = ?";
-        boolean success = jdbcTemplate.update(sql,
-                patient.getVaccinated(),
-                patient.getReceived(),
-                patient.getLastdose(),
-                patient.getUserId()) == 1;
+        Patient temp = patient;
+        if(temp.getVaccinated() == false){
+            temp.setReceived(1);
+            temp.setVaccinated(true);
+            temp.setLastdose(LocalDateTime.now());
+
+        }else if(temp.getReceived() == 1){
+            if(temp.getLastdose().plusMonths(3).isBefore(LocalDateTime.now())){
+                temp.setReceived(2);
+                temp.setLastdose(LocalDateTime.now());
+            }
+        }else if(temp.getReceived() == 2){
+            if(temp.getLastdose().plusMonths(6).isBefore(LocalDateTime.now())){
+                temp.setReceived(3);
+                temp.setLastdose(LocalDateTime.now());
+            }
+        }else if(temp.getReceived() == 3){
+            if(temp.getLastdose().plusMonths(3).isBefore(LocalDateTime.now())){
+                temp.setReceived(4);
+                temp.setLastdose(LocalDateTime.now());
+            }
+
+        }
+       boolean success = jdbcTemplate.update(sql,
+                temp.getVaccinated(),
+                temp.getReceived(),
+                temp.getLastdose(),
+                temp.getUserId()) == 1;
         return success ? 1 : 0;
     }
 
