@@ -66,7 +66,7 @@ public class ApplicationController {
         return "redirect:/homepanel";
     }
     @GetMapping("/application/new")
-    public String showAddUser(Model model){
+    public String addApplication(Model model){
         List<Vaccine> vaccines = vaccinesService.listAllQuanty();
         model.addAttribute("vaccines", vaccines);
         model.addAttribute("applicat", new Applicat());
@@ -75,7 +75,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/vaccination")
-    public String showApplciations(Model model){
+    public String allApplications(Model model){
         List<Applicat> vaccines = service.listAll();
         model.addAttribute("applicat", new Applicat());
         model.addAttribute("applicats", vaccines);

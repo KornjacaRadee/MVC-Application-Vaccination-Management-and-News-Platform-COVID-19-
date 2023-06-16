@@ -33,7 +33,7 @@ public class VaccineController {
     private UserServices userServices;
 
     @GetMapping("/vaccine")
-    public String showVaccines(Model model){
+    public String allVaccines(Model model){
         List<Vaccine> list = service.listAll();
         model.addAttribute("allVaccines", list);
         return "vaccine";
@@ -64,7 +64,7 @@ public class VaccineController {
     }
 
     @GetMapping("/vaccine/new")
-    public String showAddVaccine(Model model){
+    public String addVacine(Model model){
         List<Manufacturer> manufacturers = manufacturerServices.listAll();
 
         model.addAttribute("vaccine", new Vaccine());
@@ -92,7 +92,7 @@ public class VaccineController {
     }
 
     @GetMapping("/vaccine/edit/{id}")
-    public String showEditVaccine(@PathVariable("id") Integer id, Model model, HttpServletRequest request, RedirectAttributes ra) throws UserNotFoundException {
+    public String editVaccine(@PathVariable("id") Integer id, Model model, HttpServletRequest request, RedirectAttributes ra) throws UserNotFoundException {
         List<Manufacturer> manufacturers = manufacturerServices.listAll();
         Vaccine vaccine = service.get(id);
         Cookie[] cookies = request.getCookies();
@@ -116,7 +116,7 @@ public class VaccineController {
     }
 
     @GetMapping("/vaccine/info/{id}")
-    public String showInfoVaccine(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String infoVaccine(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         List<Manufacturer> manufacturers = manufacturerServices.listAll();
         Vaccine vaccine = service.get(id);
         model.addAttribute("dissic", "readonly");
@@ -127,7 +127,7 @@ public class VaccineController {
     }
 
     @GetMapping("/vaccine/delete/{id}")
-    public String deleteVax(@PathVariable("id") Integer id, RedirectAttributes ra){
+    public String deleteVaccine(@PathVariable("id") Integer id, RedirectAttributes ra){
         service.delete(id);
         ra.addFlashAttribute("message", "Vakcina je izbrisana");
         return "redirect:/vaccine";

@@ -34,8 +34,8 @@ public class InfectedServices {
     }
 
     public Infected get(Integer id) {
-        Infected infectedNews = repository.findInfectedById(id);
-        return infectedNews;
+        Infected infected = repository.findInfectedById(id);
+        return infected;
     }
 
     public void delete(Integer id) { repository.delete(id); }

@@ -25,7 +25,7 @@ public class PatientController {
     private UserServices userService;
 
     @GetMapping("/patient")
-    public String showPatients(Model model) throws UserNotFoundException {
+    public String allPatients(Model model) throws UserNotFoundException {
         List<Patient> list = service.getAllPatients();
         model.addAttribute("allPatients", list);
         return "patient";
@@ -39,7 +39,7 @@ public class PatientController {
     }
 
     @GetMapping("/patient/edit/{id}")
-    public String showEditUser(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String editUser(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         Patient patient = service.getPatientById(id);
         model.addAttribute("patient", patient);
         model.addAttribute("pageTitle",

@@ -31,7 +31,7 @@ public class LoginController {
     private UserServices service;
 
     @GetMapping("/loginn")
-    public String showLogin(Model model){
+    public String loginpage(Model model){
         model.addAttribute("manufacturer", new Manufacturer());
         model.addAttribute("pageTitle", "Dodaj novog proizvodjaca");
         return "login";

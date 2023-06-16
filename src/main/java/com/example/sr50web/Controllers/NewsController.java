@@ -41,21 +41,23 @@ public class NewsController {
         return "news";
     }
     @GetMapping("/home")
-    public String showNewsHome(Model model){
+    public String newsHome(Model model){
         List<News> list = service.allNews();
         model.addAttribute("allNews", list);
         List<Infected> infectedNews = infectedServices.allInfected();
-        for(Infected infected : infectedNews){
-            LocalDate today = LocalDate.now();
-            if (infected.getDateTime().isEqual(today)) {
-                model.addAttribute("style","visibility: visible; width: 50vw; margin: auto;");
-                model.addAttribute("infected", infected.getInfected());
-                model.addAttribute("hospitalized", infected.getHospitalized());
-                model.addAttribute("tested", infected.getTested());
-                model.addAttribute("respirator", infected.getRespirator());
-                model.addAttribute("allinf", infected.getAllInfected());
-            } else {
+        if(infectedNews != null) {
+            for (Infected infected : infectedNews) {
+                LocalDate today = LocalDate.now();
+                if (infected.getDateTime().isEqual(today)) {
+                    model.addAttribute("style", "visibility: visible; width: 50vw; margin: auto;");
+                    model.addAttribute("infected", infected.getInfected());
+                    model.addAttribute("hospitalized", infected.getHospitalized());
+                    model.addAttribute("tested", infected.getTested());
+                    model.addAttribute("respirator", infected.getRespirator());
+                    model.addAttribute("allinf", infected.getAllInfected());
+                } else {
 
+                }
             }
         }
 
@@ -64,7 +66,7 @@ public class NewsController {
     }
 
     @GetMapping("/news/new")
-    public String showNewForm(Model model, HttpServletRequest request) throws UserNotFoundException {
+    public String newForm(Model model, HttpServletRequest request) throws UserNotFoundException {
         model.addAttribute("news", new News());
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
@@ -90,7 +92,7 @@ public class NewsController {
     }
 
     @GetMapping("/news/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String editNews(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         News news = service.get(id);
         model.addAttribute("news", news);
         return "newNews";

@@ -35,14 +35,14 @@ public class UserController {
     private PatientServices patientService;
 
     @GetMapping("/user")
-    public String showUsers(Model model){
+    public String allUsers(Model model){
         List<User> listUsers = service.listAll();
         model.addAttribute("allUsers", listUsers);
         return "user";
     }
 
     @GetMapping("/user/new")
-    public String showAddUser(Model model){
+    public String addUser(Model model){
         Patient temp = new Patient();
         temp.setReceived(0);
         model.addAttribute("patient", temp);
@@ -148,7 +148,7 @@ public class UserController {
         }
     }
     @GetMapping("/user/edit/{id}")
-    public String showEditUser(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String editUserWithoutCookie(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         try{
             User user = service.get(id);
             model.addAttribute("user", user);

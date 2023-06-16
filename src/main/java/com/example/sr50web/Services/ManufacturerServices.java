@@ -23,8 +23,8 @@ public class ManufacturerServices {
     }
 
     public Manufacturer get(Integer id) {
-        Manufacturer result = repository.findManucaturerById(id);
-        return result;
+        Manufacturer manufacturer = repository.findManucaturerById(id);
+        return manufacturer;
     }
 
     public void delete(Integer id) {

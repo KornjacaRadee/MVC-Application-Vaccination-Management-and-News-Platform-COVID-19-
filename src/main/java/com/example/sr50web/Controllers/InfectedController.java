@@ -28,7 +28,7 @@ public class InfectedController {
     @Autowired
     private UserServices userService;
     @GetMapping("/infected")
-    public String showNewsList(Model model){
+    public String newsList(Model model){
         List<Infected> list = service.allInfected();
         model.addAttribute("infected", new Infected());
         model.addAttribute("allInfected", list);
@@ -36,7 +36,7 @@ public class InfectedController {
     }
 
     @GetMapping("/infected/new")
-    public String showNewForm(Model model, HttpServletRequest request) throws UserNotFoundException {
+    public String newInfected(Model model, HttpServletRequest request) throws UserNotFoundException {
         model.addAttribute("infected", new Infected());
         model.addAttribute("pageTitle", "Add news");
         Cookie[] cookies = request.getCookies();
@@ -63,7 +63,7 @@ public class InfectedController {
     }
 
     @GetMapping("/infected/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String editInfected(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         Infected infected = service.get(id);
         model.addAttribute("infected", infected);
         model.addAttribute("pageTitle",

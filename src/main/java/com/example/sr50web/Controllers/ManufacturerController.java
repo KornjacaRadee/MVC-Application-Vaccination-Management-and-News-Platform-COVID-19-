@@ -19,13 +19,13 @@ public class ManufacturerController {
     private ManufacturerServices service;
 
     @GetMapping("/manufacturer")
-    public String showManufacturerList(Model model){
+    public String allManufacturers(Model model){
         List<Manufacturer> list = service.listAll();
         model.addAttribute("allManufacturers", list);
         return "manufacturer";
     }
     @GetMapping("/manufacturer/new")
-    public String showNewForm(Model model){
+    public String newManufacturer(Model model){
         model.addAttribute("manufacturer", new Manufacturer());
         model.addAttribute("pageTitle", "Dodaj novog proizvodjaca");
         return "newManufacturer";
@@ -37,7 +37,7 @@ public class ManufacturerController {
         return "redirect:/manufacturer";
     }
     @GetMapping("/manufacturer/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
+    public String editManufacturer(@PathVariable("id") Integer id, Model model, RedirectAttributes ra){
         Manufacturer manufacturer = service.get(id);
         model.addAttribute("manufacturer", manufacturer);
         model.addAttribute("pageTitle",
